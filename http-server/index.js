@@ -1,13 +1,23 @@
 const http = require("http");
 const fs = require("fs");
-// TODO:
+const readline = require("readline");
 const args = require("minimist")(process.argv.slice(2));
 
-// fs.readFile("home.html", (err, home) => {
-//     console.log(home.toString());
-//   });
+const lineDetail = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
 
-// --------------------------------------------------
+lineDetail.question("Enter port number - ", (portNumber) => {
+  return portNumber;
+});
+
+let homeContent = "";
+let projectContent = "";
+
+// fs.readFile("home.html", (err, home) => {
+//   console.log(home.toString());
+// });
 
 // fs.readFile("home.html", (err, home) => {
 //   if (err) throw err;
@@ -20,15 +30,10 @@ const args = require("minimist")(process.argv.slice(2));
 //     .listen(3000);
 // });
 
-//--------------------------------------------------------
-
-// Read both files and store their contents in a variable.
-let homeContent = "";
-let projectContent = "";
-let registrationContent = "";
-
 fs.readFile("home.html", (err, home) => {
-  if (err) throw err;
+  if (err) {
+    throw err;
+  }
   homeContent = home;
 });
 
@@ -45,7 +50,6 @@ fs.readFile("registration.html", (err, registration) => {
 http
   .createServer((request, response) => {
     let url = request.url;
-    // console.log(request.url);
     response.writeHeader(200, { "Content-Type": "text/html" });
     switch (url) {
       case "/project":
@@ -53,7 +57,6 @@ http
         response.end();
         break;
       case "/registration":
-        response.write(registrationContent);
         response.end();
         break;
       default:
@@ -62,4 +65,4 @@ http
         break;
     }
   })
-  .listen(args);
+  .listen(3000);

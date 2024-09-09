@@ -2,3 +2,7 @@ body {
   color: green;
   font-family: "monospace";
 }
+
+.Todo-Item:hover .trash-icon {
+  display: block;
+}
